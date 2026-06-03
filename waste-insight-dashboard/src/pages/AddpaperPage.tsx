@@ -104,7 +104,7 @@ export function AddpaperPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4" style={{ minHeight: 300 }}>
         {anyLoading ? <><Sk h="h-[300px]"/><Sk h="h-[300px]"/></> : (<>
           <MonthlyChart monthlyRows={monthlyForChart} detailRows={filteredDetail}
-            selectedMonth={f.dd.month} chartMonths={f.chartSel.months} onClickMonth={f.toggleChartMonth}/>
+            chartMonths={f.chartSel.months} onClickMonth={f.toggleChartMonth}/>
           <DeptChart deptRows={filteredDept} chartDepts={f.chartSel.depts} onClickDept={f.toggleChartDept}/>
         </>)}
       </div>
