@@ -29,22 +29,19 @@ export function useActionedJobs(): UseActionedJobsResult {
       .catch(() => setLoading(false))
   }, [rev])
 
-  const toggle = useCallback(async (jo: string) => {
-    // Optimistic update
-    const alreadyActioned = list.some(x => x.jo === jo)
-    if (alreadyActioned) {
-      setList(l => l.filter(x => x.jo !== jo))
-    } else {
-      setList(l => [...l, { jo, actionedAt: new Date().toISOString(), actionedBy: '' }])
-    }
-    // Write to GAS
-    try {
-      await fetch(`${API_URL}?action=toggle&jo=${encodeURIComponent(jo)}`)
-    } catch {
-      // Revert on failure
-      setRev(v => v + 1)
-    }
-  }, [list])
+  const toggle = useCallback((jo: string) => {
+    // Optimistic update — immediate
+    setList(l => {
+      const has = l.some(x => x.jo === jo)
+      return has
+        ? l.filter(x => x.jo !== jo)
+        : [...l, { jo, actionedAt: new Date().toISOString(), actionedBy: '' }]
+    })
+    // Fire-and-forget write to GAS (don't await — GAS is slow)
+    fetch(`${API_URL}?action=toggle&jo=${encodeURIComponent(jo)}`).catch(() => {})
+    // Sync after 3s to confirm GAS committed the write
+    setTimeout(() => setRev(v => v + 1), 3000)
+  }, [])
 
   const refetch = useCallback(() => setRev(v => v + 1), [])
 
