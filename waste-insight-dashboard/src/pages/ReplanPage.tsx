@@ -127,7 +127,7 @@ export function ReplanPage() {
         {anyLoading ? <><Sk h="h-[300px]"/><Sk h="h-[300px]"/></> : (<>
           <MonthlyChart
             monthlyRows={monthlyForChart} detailRows={filteredDetail}
-            selectedMonth={f.dd.month} chartMonths={f.chartSel.months}
+            chartMonths={f.chartSel.months}
             onClickMonth={f.toggleChartMonth}
           />
           <DeptChart
