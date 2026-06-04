@@ -99,7 +99,7 @@ export function ReplanPage({ actioned, salesMap }: { actioned: UseActionedJobsRe
       const last = sortedM[sortedM.length-1]; const prev = sortedM[sortedM.length-2]
       if (prev.Actual && last.Actual) vsPrevPct = (last.Actual - prev.Actual) / prev.Actual * 100
     }
-    // Sales & waste rate from salesMap
+    // Sales & Replan cost rate from salesMap
     let totalSales = 0
     kpiRows.forEach(r => {
       const key = `${r.CalendarYear}-${String(r.MonthNo).padStart(2,'0')}`
@@ -156,11 +156,11 @@ export function ReplanPage({ actioned, salesMap }: { actioned: UseActionedJobsRe
           {/* 1. Sales — context */}
           {kpi.totalSales > 0 && (
             <KpiCard label="Sales Volume (THB)" value={fmtK(kpi.totalSales)}
-              sub1={kpi.wasteRate !== null ? `Waste Rate: ${kpi.wasteRate.toFixed(2)}%` : undefined}
+              sub1={kpi.wasteRate !== null ? `Replan cost rate: ${kpi.wasteRate.toFixed(2)}%` : undefined}
               accent="purple"/>
           )}
-          {/* 2. Total Waste vs Target */}
-          <KpiCard label="Replan Cost (THB)" value={fmtK(kpi.totalValue)}
+          {/* 2. Replan cost vs Target */}
+          <KpiCard label="Replan cost (THB)" value={fmtK(kpi.totalValue)}
             sub1={kpi.totalTarget > 0 && kpi.achPct !== null
               ? `Target: ${fmtK(kpi.totalTarget)} · ${(-kpi.achPct) >= 0 ? '+' : ''}${(-kpi.achPct).toFixed(1)}% vs target`
               : undefined}
@@ -169,7 +169,7 @@ export function ReplanPage({ actioned, salesMap }: { actioned: UseActionedJobsRe
             accent="blue"
             progress={kpi.totalTarget > 0 ? kpi.totalValue / kpi.totalTarget : null}
             progressBad={true}/>
-          {/* 3. Waste Rate — key insight (only without sales card to avoid dupe) */}
+          {/* 3. Replan cost rate — key insight (only without sales card to avoid dupe) */}
           {kpi.totalSales === 0 && kpi.wasteRate !== null && (
             <KpiCard label="Replan cost rate" value={`${kpi.wasteRate.toFixed(2)}%`}
               sub1="waste / sales revenue" accent="amber"/>
