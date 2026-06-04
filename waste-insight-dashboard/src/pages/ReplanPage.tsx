@@ -160,7 +160,7 @@ export function ReplanPage({ actioned, salesMap }: { actioned: UseActionedJobsRe
               accent="purple"/>
           )}
           {/* 2. Total Waste vs Target */}
-          <KpiCard label="Total Waste (THB)" value={fmtK(kpi.totalValue)}
+          <KpiCard label="Replan Cost (THB)" value={fmtK(kpi.totalValue)}
             sub1={kpi.totalTarget > 0 && kpi.achPct !== null
               ? `Target: ${fmtK(kpi.totalTarget)} · ${(-kpi.achPct) >= 0 ? '+' : ''}${(-kpi.achPct).toFixed(1)}% vs target`
               : undefined}
@@ -171,7 +171,7 @@ export function ReplanPage({ actioned, salesMap }: { actioned: UseActionedJobsRe
             progressBad={true}/>
           {/* 3. Waste Rate — key insight (only without sales card to avoid dupe) */}
           {kpi.totalSales === 0 && kpi.wasteRate !== null && (
-            <KpiCard label="Waste Rate" value={`${kpi.wasteRate.toFixed(2)}%`}
+            <KpiCard label="Replan cost rate" value={`${kpi.wasteRate.toFixed(2)}%`}
               sub1="waste / sales revenue" accent="amber"/>
           )}
           {/* 4. Jobs to action */}
